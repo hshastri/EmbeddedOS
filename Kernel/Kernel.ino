@@ -1,14 +1,14 @@
 #include <Wire.h>
 #include "FileLoader.h"
 
-
+//the Wire library helps us to communicate with I2C devices
 
 FileLoader loader;
 
 void setup()
 {
   Wire.begin(4);                // join i2c bus with address #4
-  Wire.onReceive(interrupt); // register event
+  Wire.onReceive(interrupt);    // register event
   Serial.begin(9600);           // start serial for output
 }
 
@@ -16,20 +16,26 @@ void loop(){
   while(1) {}
 }
 
+//this function essentially makes the interrupts happen - interrupts are nothing but signals for the device
 void interrupt() {
-  //get Interrupt num
-   String params[3];
-   int count = 0;
-   int charCount = 0;
-   int x = Wire.read(); 
+  //get Interrupt num which tells us 
+   String params[3]; //array of the characters taken as parameters
+   int count = 0; 
+   int charCount = 0; 
+   int x = Wire.read();  //stores the data in bytes 
+   //read function essentially reads the bytes from master to slave device
+  
+  //the available() function in the wire library returns the number of bytes available for retrieval
+  //this loop runs as long as there are bytes available 
   while(Wire.available()) {
     char c = Wire.read(); 
     if(c == ',') { count++; charCount = 0; empty(params[1]); empty(params[1]); empty(params[1]);} 
     else {params[count] += c;   charCount++;}
   }
-  handleInterrupt21(x,params[0],params[1],params[2]);
+  handleInterrupt21(x,params[0],params[1],params[2]); //call handle interrupt on the given chraters in the params array
 }
 
+//this function entails interrupt service routine 
 void handleInterrupt21(int ax, String bx, String cx, String dx) {
   switch(ax) {
     case 0:
@@ -67,10 +73,12 @@ void handleInterrupt21(int ax, String bx, String cx, String dx) {
   }
 }
 
+//this function takes a character array as a parameter
 void printString(char* string) {
   Serial.print(string);
 }
 
+//executes the program. Takes in name of the program as parameter
 void executeProgram(char* name) {
   char buffer[512];
   readFile(name, buffer);
@@ -81,16 +89,17 @@ void executeProgram(char* name) {
   loader.stopProgramming();
 }
 
-
+//this function reads the sector from the device 
 void readSector(char buffer[512], int sector) {
     SDCARD.readblock(sector,53,buffer);
 }
 
-
+//writes the sector and takes in sector and the character array
 void writeSector(char buffer[512], int sector) { 
   SDCARD.writeblock(sector,53,buffer);
 }
 
+//takes character array containing the file name and reads the file into buffer
 void readFile(char* name , char fileBuffer[4096]) {
   char buff[512];
   int x;
@@ -100,8 +109,10 @@ void readFile(char* name , char fileBuffer[4096]) {
   int k = 0;
   int end = 0;
   int wordLen;
-  char temp[512];
+  char temp[512]; //storage capacity of the sector is 512 bytes
  
+  //going to the directory to file name and load the file sector by sector into the buff - buffer array
+
   for(p = 0 ; p < 4096; p++) { fileBuffer[p] = 0x00; } 
   readSector(buff,2);
   while(name[j] != 0x00) { j++; }
@@ -130,6 +141,8 @@ void readFile(char* name , char fileBuffer[4096]) {
 
 
 }
+
+//writes the given file. Takes in file name, a character array holding the file name, and number of sectors as parameters
 void writeFile(char* name, char* buffer, int numberOfSectors) {
   char map[512];
   char temp[512];
@@ -143,8 +156,8 @@ void writeFile(char* name, char* buffer, int numberOfSectors) {
     if(directory[x] != 0x00) {
         x = x +31;
         i = 0;  
-    } else if(directory[x] == 0x00) { 
-      for(int j = 0; j < 6; j++){
+    } else if(directory[x] == 0x00) { //finding a free directory entry 
+      for(int j = 0; j < 6; j++){ //name is 6 bytes
         if(end == 1) {
           directory[x+j] = 0x00;
         }
@@ -156,22 +169,27 @@ void writeFile(char* name, char* buffer, int numberOfSectors) {
         }   
       }
       
+
       for(int i = 0; i < numberOfSectors; i++) {
         for(int k = 5; k < 512; k++) {
-          if(map[k] == 0x00) {
+          if(map[k] == 0x00) { //finding a free sector through the map
             
-            map[k] = 0xFF;
+            map[k] = 0xFF; //setting the sector to 0xFF
             directory[x+6+i] = k;
+
+            //add the sector number to the file's directory entry
             for(int p = 0; p < 512; p++) {
               temp[p] = buffer[t*512 + p];
               
             }
+            //writing the bytes from buffer to that sector
             writeSector(temp,k);
             t++;
             break;  
           }
         }
       }
+      //filling the remaining bytes entry to 0x00
       for(int i = i+1; i < 26-numberOfSectors; i++) {
         directory[x+6+i] = 0x00;    
       }
@@ -183,6 +201,7 @@ void writeFile(char* name, char* buffer, int numberOfSectors) {
   writeSector(directory,2);
 }
 
+//deletes the file. Takes in the file name as a parameter
 void deleteFile(char* name) {
   char map[512];
   char directory[512];
@@ -220,6 +239,7 @@ void deleteFile(char* name) {
 
 }
 
+//empties the given array. Takes in the array to empty as a parameter
 void empty(String array) {
  array = "";
 }

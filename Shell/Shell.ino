@@ -13,17 +13,17 @@ delay(3000);
 
 
 void initInterrupt() {
-  Wire.begin();
+  Wire.begin(); //initiates the Wire library and joins the I2C bus
 }
 void interrupt(int ax,char* bx,char* cx,char* dx) {
-  Wire.beginTransmission(4); 
-  Wire.write(ax);
-  char* send = malloc((sizeof(bx)+sizeof(cx)+sizeof(dx)));
+  Wire.beginTransmission(4); //begin the transition to the I2C device
+  Wire.write(ax); //writes data from the slave device. ax is the character sent as a series of bytes
+  char* send = malloc((sizeof(bx)+sizeof(cx)+sizeof(dx))); //allocates the size by assing the size
   strcpy(send,bx);
   strcat(send,",");
   strcat(send,cx);
   strcat(send,",");
   strcat(send,dx);
-  Wire.write(send);
-  Wire.endTransmission();
+  Wire.write(send); //send is number of bytes to write 
+  Wire.endTransmission(); //ends the transition to the I2C device
 }
