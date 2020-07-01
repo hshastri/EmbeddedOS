@@ -72,6 +72,7 @@ The interrupt() function begins transmission between the two I2C devices (the ar
 The writeSector() function takes the sector and the buffer array and writes the sector.</br>
 - Use the writeblock() function in the SDCARD library </br>
 </br>
+</br>
 The deleteFile() function takes the name of the file you want to delete and deletes the file basically. </br>
 - The name of the file is passed in as a char*. </br>
 - Create two arrays of size 512 bytes. One of the arrays is the directory and the other is map. </br>
@@ -79,6 +80,7 @@ The deleteFile() function takes the name of the file you want to delete and dele
 - Then, the first byte of the file name is supposed to be set to 0x00 </br>
 - Go through the sectors numbers listed as corresponding to the file. </br>
 - Write the character arrays.
+</br>
 </br>
 The writeFile() function is responsible for actually writing the file. </br>
 - Takes in the file name, the character array holding the file name and number of sectors as parameters. </br>
