@@ -68,12 +68,11 @@ The interrupt() function begins transmission between the two I2C devices (the ar
  Wire.write(a); //send is number of bytes to write
 ```
 - End the transmission now. 
-</br>
+
 ## Writing Files
 The writeSector() function takes the sector and the buffer array and writes the sector.</br>
 - Use the writeblock() function in the SDCARD library </br>
-</br>
-</br>
+
 The deleteFile() function takes the name of the file you want to delete and deletes the file basically. </br>
 - The name of the file is passed in as a char*. </br>
 - Create two arrays of size 512 bytes. One of the arrays is the directory and the other is map. </br>
