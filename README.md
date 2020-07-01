@@ -90,5 +90,5 @@ The writeFile() function is responsible for actually writing the file. </br>
   - Search a free sector by searching through the Map for a 0x00. </br>
   - It is important to not overwrite the bootloader after entry 4. </br>
   - The remaining bytes are now filed in the directory entry to 0x00. </br>
-  - Now it is time to finally write the Map and Directory sectors back to the disk. </br>
+  - Now it's the time to finally write the Map and Directory sectors back to the disk. </br>
 
