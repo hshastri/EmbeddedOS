@@ -25,10 +25,11 @@ The interrupt() function is essentially responsible to make the interrupts happe
 - Make a variable which reads in the bytes from the incoming device. </br>
 - Using a while loop fill the array which stores the register parameters. </br>
 - Call handleInterrupt() function on those register parameters which will handle interrupt routines per the  signals from the device. </br>
-</br>
+
 The handleInterrupt21() function is responsible for Interrupt Service Routine.</br>
 - The function takes in three registers and an integer (which is data stored in bytes) as parameters.</br>
 - The function handles interrupt service routines </br>
+
 The readSector() reads sectors from the device.</br>
 - Takes in two parameters: buffer array, and the sector as an integer </br>
 - Use writeBlock() function since we are using an SD Card.</br>
@@ -42,7 +43,7 @@ The readFile() function takes a character array containing the file name and rea
 - Load the file by each sector into the buffer array using the sector numbers. </br>
 - Everytime readSector is called, the buffer address should be added by 512. </br>
 - Return </br>
-</br>
+
 The executeProgram() takes in the program as a parameter and executes it. </br>
 - Create a character buffer array. </br>
 - Call readFile() function, passing in the name of the program and the buffer array created. </br>
@@ -51,7 +52,7 @@ In Shell.ino: </br>
 The initInterrupt() function initializes the interrupt. </br>
 - The function takes four parameters - three char pointers and an integer. </br>
 - You would just use the begin() function in the Wire library </br>
-</br>
+
 The interrupt() function begins transmission between the two I2C devices (the arduino), and runs a session. </br>
 - Using the wire library, begin the transition to the I2C device at 4. </br>
 - Write the integer passed in as parameter using the wire library. </br>
@@ -66,7 +67,7 @@ The interrupt() function begins transmission between the two I2C devices (the ar
  strcat(a,d);
  Wire.write(a); //send is number of bytes to write
 ```
--End the transmission now. 
+- End the transmission now. 
 </br>
 ## Writing Files
 The writeSector() function takes the sector and the buffer array and writes the sector.</br>
