@@ -56,6 +56,7 @@ The interrupt() function begins transmission between the two I2C devices (the ar
 - Using the wire library, begin the transition to the I2C device at 4. </br>
 - Write the integer passed in as parameter using the wire library. </br>
 - Let’s say b, c and d are the integer parameters you passed in. Do something like this : </br>
+
  ```
  char* a = malloc((sizeof(b)+sizeof(c)+sizeof(d))); //allocates the size by assing the size
  strcpy(a,b);
@@ -66,6 +67,7 @@ The interrupt() function begins transmission between the two I2C devices (the ar
  Wire.write(a); //send is number of bytes to write
 ```
 -End the transmission now. 
+</br>
 ## Writing Files
 The writeSector() function takes the sector and the buffer array and writes the sector.</br>
 - Use the writeblock() function in the SDCARD library </br>
