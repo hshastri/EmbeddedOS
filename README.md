@@ -74,21 +74,21 @@ The writeSector() function takes the sector and the buffer array and writes the 
 </br>
 </br>
 The deleteFile() function takes the name of the file you want to delete and deletes the file basically. </br>
-* The name of the file is passed in as a char*. </br>
-* Create two arrays of size 512 bytes. One of the arrays is the directory and the other is map. </br>
-* Navigate the directory using loops and find the file name. </br>
-* Then, the first byte of the file name is supposed to be set to 0x00 </br>
-* Go through the sectors numbers listed as corresponding to the file. </br>
-* Write the character arrays.
+- The name of the file is passed in as a char*. </br>
+- Create two arrays of size 512 bytes. One of the arrays is the directory and the other is map. </br>
+- Navigate the directory using loops and find the file name. </br>
+- Then, the first byte of the file name is supposed to be set to 0x00 </br>
+- Go through the sectors numbers listed as corresponding to the file. </br>
+- Write the character arrays.
 </br>
-</br>
+
 The writeFile() function is responsible for actually writing the file. </br>
-* Takes in the file name, the character array holding the file name and number of sectors as parameters. </br>
-* The map and directory sectors are loaded into buffers. </br>
-* Search free directory entry - it should begin with 0x00. </br>
-* For each sector: </br>
-  * Search a free sector by searching through the Map for a 0x00. </br>
-  * It is important to not overwrite the bootloader after entry 4. </br>
-  * The remaining bytes are now filed in the directory entry to 0x00. </br>
-  * Now it's the time to finally write the Map and Directory sectors back to the disk. </br>
+- Takes in the file name, the character array holding the file name and number of sectors as parameters. </br>
+- The map and directory sectors are loaded into buffers. </br>
+- Search free directory entry - it should begin with 0x00. </br>
+- For each sector: </br>
+  - Search a free sector by searching through the Map for a 0x00. </br>
+  - It is important to not overwrite the bootloader after entry 4. </br>
+  - The remaining bytes are now filed in the directory entry to 0x00. </br>
+  - Now it's the time to finally write the Map and Directory sectors back to the disk. </br>
 
